@@ -1,3 +1,6 @@
+let souris={x:0, y:0};
+let timer2=setInterval(calculdistance,50);
+
 let pigeon=document.createElement("img");
 pigeon.src="pigeon.gif";
 pigeon.style.width="50px";
@@ -13,15 +16,28 @@ let timer=setInterval(deplacer,40);
 pigeon.addEventListener("click",kill);
 
 //gestion de la souris
-window.addEventListener("mousemove",calculdistance);
+window.addEventListener("mousemove",updateSouris);
 
-function calculdistance(event) {
-    let x=event.clientX;
-    let y=event.clientY;
+function updateSouris() {
+    souris.x=event.clientX;
+    souris.y=event.clientY;
+}
+
+function calculdistance() {    
+    let x=souris.x;
+    let y=souris.y;
     let a=parseInt(pigeon.style.left);
     let b=parseInt(pigeon.style.top);
-    let d=parseInt(Math.sqrt((x-a)*(x-a) + (y-b)*(y-b)));
-    console.log(d);
+    let d=parseInt(Math.sqrt((x-a)*(x-a) + (y-b)*(y-b))); 
+    let pan=(a-x)/window.innerWidth;
+
+    let maxd=window.innerHeight + window.innerWidth;
+    //fréquence entre 0 et 16000
+    let frequence=(d/maxd)*16000;
+    //triangle,square
+    tones.type="square";
+    tones.panValue=pan;
+    tones.play(frequence);
 }
 
 
